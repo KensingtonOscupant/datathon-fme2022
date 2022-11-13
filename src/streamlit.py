@@ -29,10 +29,9 @@ if __name__ == '__main__':
     #     if uploaded_file is not None:
     #         df_uploaded_file = pd.read_csv(uploaded_file, sep=file_separator)
 
-    tab1, tab2 = st.tabs(["Resultados", "Mapa"])
+    tab1 = st.tabs(["Order Details Form"])
 
     with tab1:
-        st.header("We have a few questiones for you, señor!")
 
         # SHOW UPLOAD
         # if not df_uploaded_file.empty:
@@ -44,9 +43,9 @@ if __name__ == '__main__':
         # BUTTON
         results = None
 
-        with st.form(key='my_form'):
+        st.subheader("Please tell us about the order you expect.")
 
-            st.subheader("Please tell us about the order you expect.")
+        with st.form(key='my_form'):
 
             origin_port = st.text_input('At which port do the order imports arrive?', placeholder="Athens")
             third_party = st.text_input('Which third party is responsible for warehousing, distribution and fulfillment services?', placeholder="v_001")
