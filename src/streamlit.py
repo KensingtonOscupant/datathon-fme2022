@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 
-
 # Functions
 XGBOOST = 'XGBoost'
 
@@ -76,9 +75,11 @@ if __name__ == '__main__':
         }
 
         # for testing purposes
-        # origin_port = "Athens"
-        # customer = "Vienna"
-        # logistic_hub = "Lille"
+
+        if origin_port == "":
+            origin_port = "Athens"
+            customer = "Athens"
+            logistic_hub = "Athens"
 
         # load data from data/datathon_SC_ACN_22/cities_data.csv into a dataframe
         df = pd.read_csv('data/datathon_SC_ACN_22/cities_data.csv', delimiter=';')
@@ -103,6 +104,9 @@ if __name__ == '__main__':
         # create a dataframe df2 with the columns "from" and "to" store coordinate pairs with the key "coordinates"
         df2 = pd.DataFrame({'from': [[city_from_coord_lon, city_from_coord_lat],[logistic_hub_coord_lon, logistic_hub_coord_lat]], 'to': [[logistic_hub_coord_lon, logistic_hub_coord_lat],[city_to_coord_lon, city_to_coord_lat]]})
         # df2 = pd.DataFrame({'from': ["51.2254018, 6.7763137"]}, {'to': ["41.6521342, -0.8809428"]})
+
+        # create a dataframe df_ports with the columns "lat" and "lon" store the coordinates of the ports
+        df_ports = pd.DataFrame({'lat': [37.9839412, 51.9244424, 41.3828939], 'lon': [23.7283052, 4.47775, 2.1774322]})
 
         map_data = df[["lon", "lat"]]
         
@@ -133,6 +137,13 @@ if __name__ == '__main__':
                     data=df,
                     get_position='[lon, lat]',
                     get_color='[200, 30, 0, 160]',
+                    get_radius=20000,
+                ),
+                pdk.Layer(
+                    'ScatterplotLayer',
+                    data=df_ports,
+                    get_position='[lon, lat]',
+                    get_color='[74, 75, 15, 22]',
                     get_radius=20000,
                 ),
             ],
