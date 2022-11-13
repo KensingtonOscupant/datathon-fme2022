@@ -29,7 +29,7 @@ if __name__ == '__main__':
     #     if uploaded_file is not None:
     #         df_uploaded_file = pd.read_csv(uploaded_file, sep=file_separator)
 
-    tab1 = st.tabs(["Order Details Form"])
+    tab1, tab2 = st.tabs(["Resultados", "Mapa"])
 
     with tab1:
 
