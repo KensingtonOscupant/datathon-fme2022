@@ -48,7 +48,6 @@ if __name__ == '__main__':
 
             st.subheader("Please tell us about the order you expect.")
 
-            order_id = st.text_input('Which ID does the order have?', placeholder="366c7a3d298f")
             origin_port = st.text_input('At which port do the order imports arrive?', placeholder="Athens")
             third_party = st.text_input('Which third party is responsible for warehousing, distribution and fulfillment services?', placeholder="v_001")
             customs_procedure = st.text_input('What is the type of customs procedure to be used in the imports legal process?', placeholder="CRF")
@@ -56,22 +55,17 @@ if __name__ == '__main__':
             customer = st.text_input('Where is the customer located?', placeholder="Vienna")
             product_id = st.text_input('What is the unique ID of the product?', placeholder="1692723")
             units = st.text_input('How many units are ordered?', placeholder="583")
-            weight = st.text_input('How much does the order weigh?', placeholder="2876")
-            material_handling = st.text_input('How safe is the product to handle and how easy is it to break? Provide the class, please.', placeholder="1")
             submit_button = st.form_submit_button(label='Submit')
 
         # create a JSON object that includes all the information
         order = {
-            "order_id": order_id,
             "origin_port": origin_port,
             "third_party": third_party,
             "customs_procedure": customs_procedure,
             "logistic_hub": logistic_hub,
             "customer": customer,
             "product_id": product_id,
-            "units": units,
-            "weight": weight,
-            "material_handling": material_handling
+            "units": units
         }
 
         # for testing purposes
@@ -148,8 +142,6 @@ if __name__ == '__main__':
                 ),
             ],
         ))
-        if order_id == "Deutsch":
-            results = "Richtig!" # this is where you would put the map and the result between 0 and 1
 
         # SHOW RESULTS
         if results:
