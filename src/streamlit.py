@@ -1,9 +1,18 @@
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
+from model import single_prediction
 
-# Functions
-XGBOOST = 'XGBoost'
+
+# Config
+model_dir = 'models/ensemble_classifier_v001.pkl'
+data_dir = 'data/datathon_SC_ACN_22/'
+
+cities_data = pd.read_csv(data_dir + 'cities_data.csv', delimiter=';')
+product_data = pd.read_csv(data_dir + 'product_attributes.csv', delimiter=',', index_col='product_id')
+
+pm = single_prediction.Model('models/ensemble_classifier_v001.pkl', cities_data, product_data)
+
 
 if __name__ == '__main__':
 
@@ -48,7 +57,6 @@ if __name__ == '__main__':
 
             st.subheader("Please tell us about the order you expect.")
 
-            order_id = st.text_input('Which ID does the order have?', placeholder="366c7a3d298f")
             origin_port = st.text_input('At which port do the order imports arrive?', placeholder="Athens")
             third_party = st.text_input('Which third party is responsible for warehousing, distribution and fulfillment services?', placeholder="v_001")
             customs_procedure = st.text_input('What is the type of customs procedure to be used in the imports legal process?', placeholder="CRF")
@@ -56,23 +64,41 @@ if __name__ == '__main__':
             customer = st.text_input('Where is the customer located?', placeholder="Vienna")
             product_id = st.text_input('What is the unique ID of the product?', placeholder="1692723")
             units = st.text_input('How many units are ordered?', placeholder="583")
-            weight = st.text_input('How much does the order weigh?', placeholder="2876")
-            material_handling = st.text_input('How safe is the product to handle and how easy is it to break? Provide the class, please.', placeholder="1")
             submit_button = st.form_submit_button(label='Submit')
 
         # create a JSON object that includes all the information
         order = {
-            "order_id": order_id,
             "origin_port": origin_port,
             "third_party": third_party,
             "customs_procedure": customs_procedure,
             "logistic_hub": logistic_hub,
             "customer": customer,
             "product_id": product_id,
-            "units": units,
-            "weight": weight,
-            "material_handling": material_handling
+            "units": units
         }
+
+        # Calculate prob if product details entered
+        if order['product_id'] != '':
+            order['product_id'] = int(order['product_id'])
+            order['units'] = int(order['units'])
+
+            # order = {
+            #     'product_id': 1699799,
+            #     'origin_port': 'Athens',
+            #     '3pl': 'v_001',
+            #     'customs_procedures': 'CRF',
+            #     'logistic_hub': 'Venlo',
+            #     'customer': 'Rome',
+            #     'units': 355
+            # }
+            prob = pm.make_prediction([order])
+
+            # Format string with probability of delay
+            results = f"Your order is delayed with a probability of **{prob:.2%}**"
+
+        # SHOW RESULTS
+        if results:
+            st.subheader(results)
 
         # for testing purposes
 
@@ -148,13 +174,6 @@ if __name__ == '__main__':
                 ),
             ],
         ))
-        if order_id == "Deutsch":
-            results = "Richtig!" # this is where you would put the map and the result between 0 and 1
-
-        # SHOW RESULTS
-        if results:
-            # results = f_xgboost(input=df_uploaded_file)
-            st.write(results)
 
         # DOWNLOAD RESULTS
         # csv = convert_df(df_uploaded_file)
