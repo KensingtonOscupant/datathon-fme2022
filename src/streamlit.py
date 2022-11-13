@@ -143,7 +143,7 @@ if __name__ == '__main__':
                     'ScatterplotLayer',
                     data=df_ports,
                     get_position='[lon, lat]',
-                    get_color='[74, 75, 15, 22]',
+                    get_color='[255,0,0,255]',
                     get_radius=20000,
                 ),
             ],
