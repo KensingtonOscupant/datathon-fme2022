@@ -1,1 +1,3 @@
 data/datathon_SC_ACN_22
+src/data/__pycache__/*
+models/*
