@@ -97,7 +97,7 @@ def engineer_features(orders_data: pd.DataFrame, cities_data: pd.DataFrame, prod
     orders_data['weight_deviation'] = (orders_data['weight'] - orders_data['weight'].mean()).abs()
 
     # Convert material handling class as int to string class
-    orders_data['material_handling'] = orders_data['material_handling'].apply(lambda x: "c" + str(x))
+    orders_data['material_handling'] = orders_data['material_handling'].apply(lambda x: "c" + str(float(x)))
 
     # Missing product info att
     orders_data['missing_product_info'] = orders_data['weight'].isna()
@@ -109,9 +109,43 @@ def engineer_features(orders_data: pd.DataFrame, cities_data: pd.DataFrame, prod
     if training_data:
         orders_target = orders_data['late_order'] * 1
         orders_data = orders_data.drop(columns=['late_order'])
-    
+
     orders_features = orders_data.drop(columns=['origin_port', 'logistic_hub', 'customer', 'product_id'])
     orders_features = pd.get_dummies(orders_features)
+
+    # Ensure that all columns are present
+    columns_to_check = [
+        '3pl_v_001',
+        '3pl_v_002',
+        '3pl_v_003',
+        '3pl_v_004',
+        'customs_procedures_CRF',
+        'customs_procedures_DTD',
+        'customs_procedures_DTP',
+        'material_handling_c0.0',
+        'material_handling_c1.0',
+        'material_handling_c2.0',
+        'material_handling_c3.0',
+        'material_handling_c4.0',
+        'material_handling_c5.0',
+        'material_handling_cnan',
+    ]
+    for col in columns_to_check:
+        if col not in orders_features.columns:
+            orders_features[col] = 0
+
+    # Order columns
+    orders_features = orders_features[['units', 'start_lat', 'start_long', 'hub_lat', 'hub_long', 'end_lat',
+       'end_long', 'distance_on_water', 'distance_on_land',
+       'distance_on_land_log', 'distance_on_land_squared', 'units_log',
+       'units_squared', 'weight', 'weight_log', 'weight_squared',
+       'weight_deviation', 'missing_product_info', '3pl_v_001', '3pl_v_002',
+       '3pl_v_003', '3pl_v_004', 'customs_procedures_CRF',
+       'customs_procedures_DTD', 'customs_procedures_DTP',
+       'material_handling_c0.0', 'material_handling_c1.0',
+       'material_handling_c2.0', 'material_handling_c3.0',
+       'material_handling_c4.0', 'material_handling_c5.0',
+       'material_handling_cnan']]
 
     if training_data:
         return orders_features, orders_target
