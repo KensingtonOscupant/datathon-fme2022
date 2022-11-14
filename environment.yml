@@ -8,6 +8,7 @@ dependencies:
   - xz
   - nest-asyncio
   - packaging
+  - appnope
   - backcall
   - pure_eval
   - pygments
@@ -53,6 +54,7 @@ dependencies:
   - parso
   - decorator
   - ipykernel
+  - haversine
   - xgboost
   - scikit-learn
   - streamlit
