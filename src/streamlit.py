@@ -5,13 +5,13 @@ from model import single_prediction
 
 
 # Config
-model_dir = 'models/ensemble_classifier_v001.pkl'
+model_dir = 'models/xgboost_classifier_v001.pkl'
 data_dir = 'data/datathon_SC_ACN_22/'
 
 cities_data = pd.read_csv(data_dir + 'cities_data.csv', delimiter=';')
 product_data = pd.read_csv(data_dir + 'product_attributes.csv', delimiter=',', index_col='product_id')
 
-pm = single_prediction.Model('models/ensemble_classifier_v001.pkl', cities_data, product_data)
+pm = single_prediction.Model('models/xgboost_classifier_v001.pkl', cities_data, product_data)
 
 
 if __name__ == '__main__':
