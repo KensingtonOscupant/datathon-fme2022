@@ -1,6 +1,8 @@
 name: datathon-fme2
 channels:
   - defaults
+  - anaconda
+  - conda-forge
 dependencies:
   - pandas
   - seaborn
