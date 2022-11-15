@@ -8,7 +8,6 @@ dependencies:
   - xz
   - nest-asyncio
   - packaging
-  - appnope
   - backcall
   - pure_eval
   - pygments
