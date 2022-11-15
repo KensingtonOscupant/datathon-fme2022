@@ -2,3 +2,4 @@ data/datathon_SC_ACN_22
 src/**/__pycache__/*
 models/ensemble_classifier_v001.pkl
 .DS_Store
+datathon-venv/
