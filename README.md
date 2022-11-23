@@ -5,9 +5,11 @@
 [I. Introduction](#i-introduction)  
 [II. Installation](#ii-installation)
 
+Our pitch deck can be found [here](https://github.com/KensingtonOscupant/datathon-fme2022/blob/main/supplychain_presentation.pdf).
+
 ## I. Introduction
 
-This repository details a case study on supply chain resilience using data from a European fashion retailer provided by Accenture. It aims to determine how likely it is for an order not to reach the customer on time. The project was created at [Datathon FME 2022](https://datathon.cat/) and our pitch can be found [here](https://github.com/KensingtonOscupant/datathon-fme2022/blob/main/supplychain_presentation.pdf). Our final model was too large to be deployed on GitHub, which is why we used a more lightweight version of it only containing the XGBoost model in the ensemble for deploying the app to production. **A live version is available [here](https://kensingtonoscupant-datathon-fme2022-srcstreamlit-streaml-p41g62.streamlit.app/).**
+This repository details a case study on supply chain resilience using data from a European fashion retailer provided by Accenture. It aims to determine how likely it is for an order not to reach the customer on time. The project was created at [Datathon FME 2022](https://datathon.cat/). Our final model was too large to be deployed on GitHub, which is why we used a more lightweight version of it only containing the XGBoost model in the ensemble for deploying the app to production. **A live version is available [here](https://kensingtonoscupant-datathon-fme2022-srcstreamlit-streaml-p41g62.streamlit.app/).**
 
 ## II. Installation
 
